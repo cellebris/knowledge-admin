@@ -4,6 +4,7 @@ ARG APP_HOME=/app
 WORKDIR /node-lib
 
 COPY ./docker/package.json /node-lib
+COPY ./gulpfile.js /node-lib
 
 RUN npm install --prefix=/node-lib && npm cache clean --force
 
