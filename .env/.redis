@@ -1,5 +1,0 @@
-# Redis
-# ------------------------------------------------------------------------------
-REDIS_HOST="redis"
-REDIS_PORT=6379
-REDIS_PASSWORD="BWed5sOFk5RkElCXeipZ38zoSKdom8ZQxf058BMUEd8T8R3EjaPxEwkk5dAoaky0"
