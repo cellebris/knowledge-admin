@@ -26,7 +26,7 @@ DEBUG_TOOLBAR_CONFIG = {
 # MIDDLEWARE
 # ------------------------------------------------------------------------------
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#middleware
-MIDDLEWARE += ["app.global.middleware.user_timezone.TimezoneMiddleware"]  # noqa: E501
+MIDDLEWARE += ["app.global.middleware.user_timezone.TimezoneMiddleware"]
 
 # SECURITY
 # ------------------------------------------------------------------------------

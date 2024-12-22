@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = []
@@ -19,9 +18,7 @@ class Migration(migrations.Migration):
                 ("updated", models.DateTimeField(editable=False)),
                 (
                     "id",
-                    models.UUIDField(
-                        default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True
-                    ),
+                    models.UUIDField(default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True),
                 ),
                 ("name", models.CharField(max_length=255, verbose_name="Name")),
                 ("fields", app.utils.fields.DictionaryField(default=dict, verbose_name="Fields")),

@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("submissions", "0004_formsubmission_nav_path_formsubmission_page"),
     ]

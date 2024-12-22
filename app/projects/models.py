@@ -51,7 +51,7 @@ class TeamProject(BaseUUIDModel):
         choices=SUMMARY_MODELS,
         blank=True,
         null=True,
-        help_text="This AI summarization model is used if selected to perform internal analysis on passages before drafting the final summary",
+        help_text="This AI summarization model is used if selected to perform internal analysis on passages before drafting the final summary",  # noqa: E501
     )
     summary_prompt_model = models.CharField(
         _("Summarization AI Model used for generating research prompts to discover topics "),
@@ -59,7 +59,7 @@ class TeamProject(BaseUUIDModel):
         choices=SUMMARY_MODELS,
         blank=True,
         null=True,
-        help_text="This AI summarization model is used if selected to generate a topic research prompt for document collections",
+        help_text="This AI summarization model is used if selected to generate a topic research prompt for document collections",  # noqa: E501
     )
 
     summary_persona = models.TextField(

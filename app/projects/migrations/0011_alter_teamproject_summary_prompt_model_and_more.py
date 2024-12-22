@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("projects", "0010_teamproject_summary_prompt_model_and_more"),
     ]

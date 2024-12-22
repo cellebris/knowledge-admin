@@ -1,9 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from app.events.models import Event
 from app.utils import fields as model_fields
 from app.utils.models import BaseUUIDModel
-from app.events.models import Event
 
 
 class TextEmbedding(BaseUUIDModel):
@@ -11,7 +11,7 @@ class TextEmbedding(BaseUUIDModel):
     embeddings = model_fields.ListField(_("Embeddings"))
 
     def __str__(self):
-        return "[ {} ]: {}".format(self.id, self.text)
+        return f"[ {self.id} ]: {self.text}"
 
     def create_event(self, operation="update"):
         Event.objects.create(

@@ -24,9 +24,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="teaminvite",
             name="team",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, related_name="invites", to="teams.team"
-            ),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="invites", to="teams.team"),
         ),
         migrations.AddField(
             model_name="team",

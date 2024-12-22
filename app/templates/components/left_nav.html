@@ -61,16 +61,10 @@
             </a>
             <div id="flush-collapseAccount" class="accordion-collapse collapse" data-bs-parent="#accordionAccount">
               <div class="accordion-body">
-                <a id="lnk-profile"
-                   href="{% url 'users:update' %}"
-                   title="{% translate 'My Profile' %}"
-                   class="nav_link text-decoration-none">
+                <a id="lnk-profile" href="{% url 'users:update' %}" title="{% translate 'My Profile' %}" class="nav_link text-decoration-none">
                   <span class="nav_name">{% translate 'My Profile' %}</span>
                 </a>
-                <a id="lnk-emails"
-                   href="{% url 'account_email' %}"
-                   title="{% translate 'My E-mails' %}"
-                   class="nav_link text-decoration-none">
+                <a id="lnk-emails" href="{% url 'account_email' %}" title="{% translate 'My E-mails' %}" class="nav_link text-decoration-none">
                   <span class="nav_name">{% translate 'My E-mails' %}</span>
                 </a>
                 <a id="lnk-pass"
@@ -80,10 +74,7 @@
                   <span class="nav_name">{% translate 'Change Password' %}</span>
                 </a>
                 {% if team_member %}
-                  <a id="lnk-token"
-                     href="{% url 'users:token' %}"
-                     title="{% translate 'API Token' %}"
-                     class="nav_link text-decoration-none">
+                  <a id="lnk-token" href="{% url 'users:token' %}" title="{% translate 'API Token' %}" class="nav_link text-decoration-none">
                     <span class="nav_name">{% translate 'API Token' %}</span>
                   </a>
                 {% endif %}
@@ -92,10 +83,7 @@
           </div>
         </div>
         <div class="pt-3 border-top">
-          <a id="lnk-contact"
-             href="{% ui_url 'contact' %}"
-             title="{% translate 'Contact Us' %}"
-             class="nav_link text-decoration-none">
+          <a id="lnk-contact" href="{% ui_url 'contact' %}" title="{% translate 'Contact Us' %}" class="nav_link text-decoration-none">
             <i class="bx bx-envelope"></i>
             <span class="nav_name">{% translate 'Contact Us' %}</span>
           </a>

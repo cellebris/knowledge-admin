@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("media", "0001_initial"),
         ("teams", "0003_remove_team_format_prompt_remove_team_summary_prompt"),

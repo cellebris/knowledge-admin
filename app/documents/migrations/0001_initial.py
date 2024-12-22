@@ -23,9 +23,7 @@ class Migration(migrations.Migration):
                 ("updated", models.DateTimeField(editable=False)),
                 (
                     "id",
-                    models.UUIDField(
-                        default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True
-                    ),
+                    models.UUIDField(default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True),
                 ),
                 ("name", models.CharField(max_length=255, verbose_name="Document Collection Name")),
                 ("processed_time", models.DateTimeField(blank=True, null=True, verbose_name="Processed Time")),
@@ -50,9 +48,7 @@ class Migration(migrations.Migration):
                 ("updated", models.DateTimeField(editable=False)),
                 (
                     "id",
-                    models.UUIDField(
-                        default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True
-                    ),
+                    models.UUIDField(default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True),
                 ),
                 (
                     "file",

@@ -19,9 +19,7 @@ class Migration(migrations.Migration):
                 ("updated", models.DateTimeField(editable=False)),
                 (
                     "id",
-                    models.UUIDField(
-                        default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True
-                    ),
+                    models.UUIDField(default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True),
                 ),
                 ("name", models.CharField(max_length=255, verbose_name="Team Name")),
                 ("summary_prompt", models.TextField(default="", verbose_name="Summarization instructions")),
@@ -45,9 +43,7 @@ class Migration(migrations.Migration):
                 ("updated", models.DateTimeField(editable=False)),
                 (
                     "id",
-                    models.UUIDField(
-                        default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True
-                    ),
+                    models.UUIDField(default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True),
                 ),
                 ("email", models.EmailField(max_length=255)),
             ],
@@ -59,16 +55,12 @@ class Migration(migrations.Migration):
                 ("updated", models.DateTimeField(editable=False)),
                 (
                     "id",
-                    models.UUIDField(
-                        default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True
-                    ),
+                    models.UUIDField(default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True),
                 ),
                 ("name", models.CharField(max_length=255, verbose_name="Team Tags")),
                 (
                     "team",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, related_name="tags", to="teams.team"
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="tags", to="teams.team"),
                 ),
             ],
             options={
@@ -83,16 +75,12 @@ class Migration(migrations.Migration):
                 ("updated", models.DateTimeField(editable=False)),
                 (
                     "id",
-                    models.UUIDField(
-                        default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True
-                    ),
+                    models.UUIDField(default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True),
                 ),
                 ("settings", app.utils.fields.DictionaryField(default=dict, verbose_name="User Settings")),
                 (
                     "team",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, related_name="members", to="teams.team"
-                    ),
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="members", to="teams.team"),
                 ),
             ],
         ),

@@ -21,9 +21,7 @@ from .summary import summarize
 class BaseAjaxSummaryView(TeamAccessMixin, View):
     def _validate_team(self, team):
         if not team:
-            return JsonResponse(
-                {"error": "Requesting user is not a member of a team"}, status=status.HTTP_400_BAD_REQUEST
-            )
+            return JsonResponse({"error": "Requesting user is not a member of a team"}, status=status.HTTP_400_BAD_REQUEST)
         return None
 
 
@@ -219,9 +217,7 @@ class SummaryRemoveView(BaseAjaxSummaryView):
 class BaseAjaxNoteView(TeamAccessMixin, View):
     def _validate_team(self, team):
         if not team:
-            return JsonResponse(
-                {"error": "Requesting user is not a member of a team"}, status=status.HTTP_400_BAD_REQUEST
-            )
+            return JsonResponse({"error": "Requesting user is not a member of a team"}, status=status.HTTP_400_BAD_REQUEST)
         return None
 
 
@@ -319,9 +315,9 @@ class TimelineListView(TeamAccessMixin, TemplateView):
 
         if self.request.GET.get("tag", None) and self.request.GET["tag"]:
             context["active_tag"] = self.request.GET["tag"]
-            timeline = ProjectResearchBase.objects.filter(
-                project=project, tags__name=self.request.GET["tag"]
-            ).order_by("-updated")
+            timeline = ProjectResearchBase.objects.filter(project=project, tags__name=self.request.GET["tag"]).order_by(
+                "-updated"
+            )
         else:
             context["active_tag"] = ""
             timeline = ProjectResearchBase.objects.filter(project=project).order_by("-updated")

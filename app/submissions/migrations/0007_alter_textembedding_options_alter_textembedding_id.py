@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("submissions", "0006_remove_textembedding_embedding_and_more"),
     ]

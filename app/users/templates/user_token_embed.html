@@ -51,9 +51,7 @@
               {% endif %}
             </button>
             {% if token %}
-              <button type="button" class="token-button btn btn-primary mb-5" data-url="{% url 'users:revoke_token' %}">
-                Revoke
-              </button>
+              <button type="button" class="token-button btn btn-primary mb-5" data-url="{% url 'users:revoke_token' %}">Revoke</button>
             {% endif %}
           </div>
         </div>

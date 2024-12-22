@@ -127,7 +127,7 @@
                       {% for file_form in files.forms %}
                         <tr class="file-form mt-2" data-basename="files-{{ forloop.counter0 }}">
                           <td class="file-display">
-                            <img src="{{ file_form.file.value.url }}" alt="Media display" width="250px"/>
+                            <img src="{{ file_form.file.value.url }}" alt="Media display" width="250px" />
                           </td>
                           <td class="file-input form-field">
                             {{ file_form.id }}
@@ -178,7 +178,7 @@
                       {% for bookmark_form in bookmarks.forms %}
                         <tr class="bookmark-form mt-2" data-basename="bookmarks-{{ forloop.counter0 }}">
                           <td class="bookmark-display">
-                            <img src="{{ bookmark_form.url.value }}" alt="Media display" width="250px"/>
+                            <img src="{{ bookmark_form.url.value }}" alt="Media display" width="250px" />
                           </td>
                           <td class="bookmark-input form-field">
                             {{ bookmark_form.id }}

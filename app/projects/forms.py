@@ -37,9 +37,7 @@ class ProjectForm(forms.ModelForm):
         self.fields["documents"].queryset = (
             self.fields["documents"].queryset.filter(Q(access_teams__id=str(team.id)) | Q(team=team)).distinct()
         )
-        self.fields["projects"].queryset = (
-            self.fields["projects"].queryset.filter(access_teams__id=str(team.id)).distinct()
-        )
+        self.fields["projects"].queryset = self.fields["projects"].queryset.filter(access_teams__id=str(team.id)).distinct()
         self.fields["access_teams"].queryset = self.fields["access_teams"].queryset.exclude(id=team.id)
 
     def clean_documents(self):

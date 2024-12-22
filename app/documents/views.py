@@ -36,9 +36,7 @@ class DocumentCollectionTable(django_tables2.Table):
 
         update_url = reverse("documents:form_update", kwargs={"pk": record.id})
         operations.append(
-            f'<a class="btn btn-primary px-4 py-2" title="Edit" href="{update_url}">'
-            + '<i class="bx bx-edit"></i>'
-            + "</a>"
+            f'<a class="btn btn-primary px-4 py-2" title="Edit" href="{update_url}">' + '<i class="bx bx-edit"></i>' + "</a>"
         )
         remove_url = reverse("documents:remove", kwargs={"pk": record.id})
         operations.append(

@@ -26,9 +26,7 @@ class ProjectTable(django_tables2.Table):
 
         update_url = reverse("projects:form_update", kwargs={"pk": record.id})
         operations.append(
-            f'<a class="btn btn-primary px-4 py-2" title="Edit" href="{update_url}">'
-            + '<i class="bx bx-edit"></i>'
-            + "</a>"
+            f'<a class="btn btn-primary px-4 py-2" title="Edit" href="{update_url}">' + '<i class="bx bx-edit"></i>' + "</a>"
         )
         remove_url = reverse("projects:remove", kwargs={"pk": record.id})
         operations.append(
@@ -104,8 +102,7 @@ class FormMixin(TeamOwnershipMixin):
             )
             messages.success(
                 self.request,
-                "We can add new AI model integrations on request and work with you "
-                "to fine tune AI models to your needs",
+                "We can add new AI model integrations on request and work with you " "to fine tune AI models to your needs",
             )
 
         return context

@@ -18,9 +18,7 @@ class Migration(migrations.Migration):
                 ("updated", models.DateTimeField(editable=False)),
                 (
                     "id",
-                    models.UUIDField(
-                        default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True
-                    ),
+                    models.UUIDField(default=uuid.uuid1, editable=False, primary_key=True, serialize=False, unique=True),
                 ),
                 (
                     "description",
