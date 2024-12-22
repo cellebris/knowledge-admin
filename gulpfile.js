@@ -21,7 +21,7 @@ const uglify = require('gulp-uglify-es').default;
 
 // Relative paths function
 function pathsConfig(appName) {
-  this.app = `./${pjson.name}`;
+  this.app = '/app';
 
   return {
     app: this.app,

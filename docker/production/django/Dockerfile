@@ -1,10 +1,15 @@
 FROM node:22-bullseye-slim AS client-builder
 
 ARG APP_HOME=/app
-WORKDIR ${APP_HOME}
+WORKDIR /node-lib
 
-COPY ./docker/package.json ${APP_HOME}
-RUN npm install && npm cache clean --force
+COPY ./docker/package.json /node-lib
+
+RUN npm install --prefix=/node-lib && npm cache clean --force
+
+ENV PATH=/node-lib/node_modules/.bin/:$PATH
+ENV NODE_PATH=/node-lib/node_modules
+
 COPY . ${APP_HOME}
 RUN npm run build
 
@@ -90,9 +95,6 @@ RUN chmod +x /start-flower
 
 # copy application code to WORKDIR
 COPY --from=client-builder --chown=django:django ${APP_HOME} ${APP_HOME}
-
-
-# make django owner of the WORKDIR directory as well.
 RUN chown django:django ${APP_HOME}
 
 USER django
