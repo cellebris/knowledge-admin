@@ -75,6 +75,30 @@ function scripts() {
     .pipe(dest(paths.js));
 }
 
+// Browser sync server for live reload
+function initBrowserSync() {
+  browserSync.init(
+    [`${paths.css}/*.css`, `${paths.js}/*.js`, `${paths.templates}/*.html`],
+    {
+      // https://www.browsersync.io/docs/options/#option-open
+      // Disable as it doesn't work from inside a container
+      open: false,
+      // https://www.browsersync.io/docs/options/#option-proxy
+      proxy: {
+        target: process.env.APP_SERVER_HOST,
+        proxyReq: [
+          function (proxyReq, req) {
+            // Assign proxy 'host' header same as current request at Browsersync server
+            proxyReq.setHeader('Host', req.headers.host);
+          },
+        ],
+      },
+      // https://browsersync.io/docs/options/#option-notify
+      notify: false,
+    },
+  );
+}
+
 // Watch
 function watchPaths() {
   watch(`${paths.sass}/*.scss`, project_styles);
@@ -85,9 +109,9 @@ function watchPaths() {
   );
 }
 
-// Generate all assets
 const generateAssets = parallel(project_styles, scripts);
+const dev = parallel(initBrowserSync, watchPaths);
 
-exports.default = series(generateAssets, watchPaths);
+exports.default = series(generateAssets, dev);
 exports['generate-assets'] = generateAssets;
-exports['dev'] = series(generateAssets, watchPaths);
+exports['dev'] = dev;
