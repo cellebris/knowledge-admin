@@ -1,16 +1,14 @@
-name: CI
-
-# Enable Buildkit and let compose use it to speed up image building
-env:
-  DOCKER_BUILDKIT: 1
-  COMPOSE_DOCKER_CLI_BUILD: 1
+name: CI/CD
 
 on:
   pull_request:
-    branches: ["main"]
-
+    branches:
+      - main
   push:
-    branches: ["main"]
+    branches:
+      - main
+    tags:
+      - "*"
 
 concurrency:
   group: ${{ github.head_ref || github.run_id }}
@@ -27,27 +25,50 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.1
 
-  pytest:
+  docker_latest:
+    needs: [linter]
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code Repository
+      - name: Check Repository
         uses: actions/checkout@v4
 
-      - name: Build the Stack
-        run: docker compose build
+      - name: Login to Docker Registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
 
-      - name: Run DB Migrations
-        run: docker compose run --rm ui python manage.py migrate
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          file: ./docker/production/django/Dockerfile
+          context: .
+          push: true
+          tags: zimagi/knowledge-admin:latest
 
-      - name: Run Django UI Tests
-        run: docker compose run ui pytest --ds=config.settings.local.ui -o 'python_files=test_ui_*.py'
+  docker_tag:
+    needs: [linter]
+    if: contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Repository
+        uses: actions/checkout@v4
 
-      - name: Run Django API Tests
-        run: docker compose run api pytest --ds=config.settings.local.api -o 'python_files=test_api_*.py'
+      - name: Login to Docker Registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
 
-      - name: Tear down the Stack
-        run: docker compose down
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          file: ./docker/production/django/Dockerfile
+          context: .
+          push: true
+          tags: zimagi/knowledge-admin:${{  github.ref_name }}
