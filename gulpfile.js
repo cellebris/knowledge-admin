@@ -4,12 +4,11 @@
 
 // Gulp and package
 const { src, dest, parallel, series, watch } = require('gulp');
-const pjson = require('/node-lib/package.json');
+const pjson = require('/app/package.json');
 
 // Plugins
 const autoprefixer = require('autoprefixer');
 const browserSync = require('browser-sync').create();
-const tildeImporter = require('node-sass-tilde-importer');
 const cssnano = require('cssnano');
 const pixrem = require('pixrem');
 const plumber = require('gulp-plumber');
@@ -54,7 +53,13 @@ function project_styles() {
   return src(`${paths.sass}/project.scss`)
     .pipe(
       sass({
-        importer: tildeImporter,
+        silenceDeprecations: [
+          'legacy-js-api',
+          'mixed-decls',
+          'color-functions',
+          'global-builtin',
+          'import',
+        ],
         includePaths: [paths.sass],
       }).on('error', sass.logError),
     )
@@ -77,6 +82,7 @@ function scripts() {
 
 // Browser sync server for live reload
 function initBrowserSync() {
+  console.log(`Listening at: ${process.env.APP_SERVER_HOST}`);
   browserSync.init(
     [`${paths.css}/*.css`, `${paths.js}/*.js`, `${paths.templates}/*.html`],
     {
