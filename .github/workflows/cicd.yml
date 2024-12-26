@@ -48,7 +48,7 @@ jobs:
         run: docker compose up -d
 
       - name: Configure Administrative User
-        run: docker compose run --rm ui /setup
+        run: docker compose run ui /setup
 
       - name: Run Django UI Tests
         run: docker compose run ui pytest --ds=config.settings.local.ui -o 'python_files=test_ui_*.py'
@@ -78,7 +78,7 @@ jobs:
         run: docker compose up -d
 
       - name: Configure Administrative User
-        run: docker compose run --rm ui /setup
+        run: docker compose run ui /setup
 
       - name: Run Django UI Tests
         run: docker compose run ui pytest --ds=config.settings.local.ui -o 'python_files=test_ui_*.py'
