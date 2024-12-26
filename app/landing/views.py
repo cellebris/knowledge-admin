@@ -12,7 +12,7 @@ class HomeRedirectView(View):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect("research:panel")
-        return redirect("users:signup")
+        return redirect("accounts/login")
 
 
 class HomeView(TemplateView):
