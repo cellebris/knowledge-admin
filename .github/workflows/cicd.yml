@@ -44,8 +44,38 @@ jobs:
       - name: Build the Stack
         run: docker compose build
 
-      - name: Run DB Migrations
-        run: docker compose run --rm ui python manage.py migrate
+      - name: Start up the Stack
+        run: docker compose up
+
+      - name: Configure Administrative User
+        run: docker compose run --rm ui /setup
+
+      - name: Run Django UI Tests
+        run: docker compose run ui pytest --ds=config.settings.local.ui -o 'python_files=test_ui_*.py'
+
+      - name: Run Django API Tests
+        run: docker compose run api pytest --ds=config.settings.local.api -o 'python_files=test_api_*.py'
+
+      - name: Tear down the Stack
+        run: docker compose down
+
+  pytest_production:
+    runs-on: ubuntu-latest
+    env:
+      COMPOSE_FILE: compose.prod.yaml
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Create .secret environment file
+        run: mv env/secret.example env/secret
+
+      - name: Build the Stack
+        run: docker compose build
+
+      - name: Start up the Stack
+        run: docker compose up
 
       - name: Configure Administrative User
         run: docker compose run --rm ui /setup
@@ -60,7 +90,7 @@ jobs:
         run: docker compose down
 
   docker_latest:
-    needs: [linter, pytest_local]
+    needs: [linter, pytest_local, pytest_production]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
@@ -82,7 +112,7 @@ jobs:
           tags: zimagi/knowledge-admin:latest
 
   docker_tag:
-    needs: [linter, pytest_local]
+    needs: [linter, pytest_local, pytest_production]
     if: contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
