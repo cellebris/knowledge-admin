@@ -2,27 +2,10 @@ include:
   - ./compose.db.yaml
 
 services:
-  node:
-    build:
-      context: .
-      dockerfile: ./docker/local/node/Dockerfile
-    image: 'knowledge_admin_node'
-    container_name: 'knowledge_admin_node'
-    depends_on:
-      - ui
-    volumes:
-      - '.:/app:z'
-    env_file:
-      - ./env/public
-    ports:
-      - '3000:3000'
-      # Expose browsersync UI: https://www.browsersync.io/docs/options/#option-ui
-      - '3001:3001'
-
   ui: &django
     build:
       context: .
-      dockerfile: ./docker/local/django/Dockerfile
+      dockerfile: ./docker/production/django/Dockerfile
     image: 'knowledge_admin_django'
     container_name: 'knowledge_admin_ui'
     depends_on:
