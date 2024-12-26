@@ -1,0 +1,45 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST="postgresql"
+POSTGRES_PORT="5432"
+POSTGRES_DB="knowledge_admin"
+POSTGRES_USER="knowledge_admin"
+POSTGRES_PASSWORD="knowledge_admin"
+
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_HOST="redis"
+REDIS_PORT=6379
+REDIS_PASSWORD="knowledge_admin"
+
+# General
+# ------------------------------------------------------------------------------
+DOMAIN_NAME="localhost"
+BASE_UI_URL="http://localhost:3000"
+BASE_API_URL="http://localhost:8080"
+
+DJANGO_SECRET_KEY="999999999"
+
+APP_SERVER_HOST="ui:8000"
+
+# Mailgun
+# ------------------------------------------------------------------------------
+MAILGUN_API_URL="https://api.mailgun.net/v3"
+
+# Django
+# ------------------------------------------------------------------------------
+DJANGO_ADMIN_PATH="admin/"
+
+CONN_MAX_AGE=100
+
+DJANGO_DEBUG="true"
+USE_DOCKER="true"
+
+DJANGO_SUPERUSER_EMAIL="admin@example.com"
+DJANGO_SUPERUSER_FIRST_NAME="John"
+DJANGO_SUPERUSER_LAST_NAME="Doe"
+DJANGO_SUPERUSER_PASSWORD="knowledge_admin"
+DJANGO_SUPERUSER_API_KEY="999999999"
+
+DJANGO_DEFAULT_FROM_EMAIL="Administrator <admin@example.com>"
+CONTACT_NOTIFICATION_EMAIL="admin@example.com"

@@ -1,0 +1,99 @@
+volumes:
+  'postgres_data': {}
+  'redis_data': {}
+
+services:
+  node:
+    build:
+      context: .
+      dockerfile: ./docker/local/node/Dockerfile
+    image: 'knowledge_admin_node'
+    container_name: 'knowledge_admin_node'
+    depends_on:
+      - ui
+    volumes:
+      - '.:/app:z'
+    env_file:
+      - ./env/public
+    ports:
+      - '3000:3000'
+      # Expose browsersync UI: https://www.browsersync.io/docs/options/#option-ui
+      - '3001:3001'
+
+  ui: &django
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    image: 'knowledge_admin_ui'
+    container_name: 'knowledge_admin_ui'
+    depends_on:
+      - postgresql
+      - redis
+    volumes:
+      - '.:/app:z'
+    env_file:
+      - ./env/public
+      - ./env/secret
+    ports:
+      - '8000:8000'
+    command: /start-ui
+
+  api:
+    <<: *django
+    image: 'knowledge_admin_api'
+    container_name: 'knowledge_admin_api'
+    depends_on:
+      - postgresql
+      - redis
+    ports:
+      - '8080:8000'
+    command: /start-api
+
+  worker:
+    <<: *django
+    image: 'knowledge_admin_worker'
+    container_name: 'knowledge_admin_worker'
+    depends_on:
+      - redis
+      - postgresql
+    ports: []
+    command: /start-worker
+
+  scheduler:
+    <<: *django
+    image: 'knowledge_admin_scheduler'
+    container_name: 'knowledge_admin_scheduler'
+    depends_on:
+      - redis
+      - postgresql
+    ports: []
+    command: /start-scheduler
+
+  flower:
+    <<: *django
+    image: 'knowledge_admin_flower'
+    container_name: 'knowledge_admin_flower'
+    ports:
+      - '5555:5555'
+    command: /start-flower
+
+  postgresql:
+    image: 'postgres:15'
+    container_name: 'knowledge_admin_postgres'
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+    env_file:
+      - ./env/public
+    ports:
+      - '5432:5432'
+
+  redis:
+    image: redis:6
+    container_name: 'knowledge_admin_redis'
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD"
+    volumes:
+      - 'redis_data:/data'
+    env_file:
+      - ./env/public
+    ports:
+      - '6379:6379'

@@ -258,6 +258,7 @@ dump.rdb
 ### Project template
 app/public_media/
 app/private_media/
+env/secret
 
 .pytest_cache/
 .ipython/
