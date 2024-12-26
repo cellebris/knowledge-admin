@@ -29,8 +29,38 @@ jobs:
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.1
 
+  pytest_local:
+    runs-on: ubuntu-latest
+    env:
+      COMPOSE_FILE: compose.local.yaml
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Create .secret environment file
+        run: mv env/secret.example env/secret
+
+      - name: Build the Stack
+        run: docker compose build
+
+      - name: Run DB Migrations
+        run: docker compose run --rm ui python manage.py migrate
+
+      - name: Configure Administrative User
+        run: docker compose run --rm ui /setup
+
+      - name: Run Django UI Tests
+        run: docker compose run ui pytest --ds=config.settings.local.ui -o 'python_files=test_ui_*.py'
+
+      - name: Run Django API Tests
+        run: docker compose run api pytest --ds=config.settings.local.api -o 'python_files=test_api_*.py'
+
+      - name: Tear down the Stack
+        run: docker compose down
+
   docker_latest:
-    needs: [linter]
+    needs: [linter, pytest_local]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
@@ -52,7 +82,7 @@ jobs:
           tags: zimagi/knowledge-admin:latest
 
   docker_tag:
-    needs: [linter]
+    needs: [linter, pytest_local]
     if: contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
