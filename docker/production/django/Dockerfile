@@ -1,9 +1,8 @@
 FROM node:22-bullseye-slim AS client-builder
 
-ARG APP_HOME=/app
 WORKDIR /node-lib
 
-COPY ./docker/package.json /node-lib
+COPY ./package.json /node-lib
 COPY ./gulpfile.js /node-lib
 
 RUN npm install --prefix=/node-lib && npm cache clean --force
@@ -11,7 +10,7 @@ RUN npm install --prefix=/node-lib && npm cache clean --force
 ENV PATH=/node-lib/node_modules/.bin/:$PATH
 ENV NODE_PATH=/node-lib/node_modules
 
-COPY . ${APP_HOME}
+COPY . /app
 RUN npm run build
 
 # define an alias for the specific python version used in this file.
