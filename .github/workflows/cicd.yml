@@ -45,7 +45,9 @@ jobs:
         run: docker compose build
 
       - name: Start up the Stack
-        run: docker compose up -d
+        run: |
+          docker compose up -d
+          sleep 10
 
       - name: Configure Administrative User
         run: docker compose run ui /setup
@@ -75,7 +77,9 @@ jobs:
         run: docker compose build
 
       - name: Start up the Stack
-        run: docker compose up -d
+        run: |
+          docker compose up -d
+          sleep 10
 
       - name: Configure Administrative User
         run: docker compose run ui /setup
