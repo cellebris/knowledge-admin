@@ -92,11 +92,9 @@ RUN chmod +x /start-scheduler
 COPY ./docker/production/django/celery/flower/start /start-flower
 RUN chmod +x /start-flower
 
-# Ensure a static files directory
-RUN mkdir -p ${APP_HOME}/staticfiles
-
 # copy application code to WORKDIR
 COPY --from=client-builder --chown=django:django ${APP_HOME} ${APP_HOME}
+RUN mkdir -p ${APP_HOME}/staticfiles
 RUN chown django:django ${APP_HOME}
 
 USER django
