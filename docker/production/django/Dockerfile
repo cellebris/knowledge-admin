@@ -1,16 +1,13 @@
 FROM node:22-bullseye-slim AS client-builder
 
-WORKDIR /node-lib
-
-COPY ./package.json /node-lib
-COPY ./gulpfile.js /node-lib
-
-RUN npm install --prefix=/node-lib && npm cache clean --force
-
-ENV PATH=/node-lib/node_modules/.bin/:$PATH
-ENV NODE_PATH=/node-lib/node_modules
-
+WORKDIR /app
 COPY . /app
+
+RUN npm install && npm cache clean --force
+
+ENV PATH=/app/node_modules/.bin/:$PATH
+ENV NODE_PATH=/app/node_modules
+
 RUN npm run build
 
 # define an alias for the specific python version used in this file.
