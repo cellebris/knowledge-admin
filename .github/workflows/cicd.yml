@@ -48,6 +48,12 @@ jobs:
       - name: Run DB Migrations
         run: docker compose run --rm ui python manage.py migrate
 
+      - name: Initialize Permissions and Roles
+        run: docker compose run --rm ui python manage.py init_roles
+
+      - name: Initialize Worker Schedules
+        run: docker compose run --rm ui python manage.py init_schedule
+
       - name: Setup platform
         run: docker compose run --rm ui /setup
 
@@ -77,6 +83,12 @@ jobs:
 
       - name: Run DB Migrations
         run: docker compose run --rm ui python manage.py migrate
+
+      - name: Initialize Permissions and Roles
+        run: docker compose run --rm ui python manage.py init_roles
+
+      - name: Initialize Worker Schedules
+        run: docker compose run --rm ui python manage.py init_schedule
 
       - name: Setup platform
         run: docker compose run --rm ui /setup
