@@ -48,6 +48,9 @@ jobs:
       - name: Run DB Migrations
         run: docker compose run --rm ui python manage.py migrate
 
+      - name: Setup platform
+        run: docker compose run --rm ui /setup
+
       - name: Run Django UI Tests
         run: docker compose run ui pytest --ds=config.settings.local.ui -o 'python_files=test_ui_*.py'
 
@@ -74,6 +77,9 @@ jobs:
 
       - name: Run DB Migrations
         run: docker compose run --rm ui python manage.py migrate
+
+      - name: Setup platform
+        run: docker compose run --rm ui /setup
 
       - name: Run Django UI Tests
         run: docker compose run ui pytest --ds=config.settings.production.ui -o 'python_files=test_ui_*.py'
