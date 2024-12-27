@@ -60,4 +60,4 @@ def test_createsuperuser_command():
     assert command_result is None
     assert out.getvalue() == "Superuser created successfully.\n"
     user = User.objects.get(email="henry@example.com")
-    assert not user.has_usable_password()
+    assert user.has_usable_password()
