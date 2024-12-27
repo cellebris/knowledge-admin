@@ -11,8 +11,6 @@ services:
     depends_on:
       - postgresql
       - redis
-    volumes:
-      - '.:/app:z'
     env_file:
       - ./env/public
       - ./env/secret
