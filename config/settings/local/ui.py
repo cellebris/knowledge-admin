@@ -11,7 +11,7 @@ ROOT_URLCONF = "config.ui_urls"
 # http://whitenoise.evans.io/en/latest/django.html#using-whitenoise-in-development
 INSTALLED_APPS = ["whitenoise.runserver_nostatic"] + INSTALLED_APPS  # noqa: F405,E501
 
-if env("RUN_TESTS", default="") != "":
+if env("RUN_TESTS", default="") == "":
     # django-debug-toolbar
     # ------------------------------------------------------------------------------
     # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#prerequisites
@@ -26,7 +26,7 @@ if env("RUN_TESTS", default="") != "":
     }
     # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#internal-ips
     INTERNAL_IPS = ["127.0.0.1", "10.0.2.2"]
-    if env("USE_DOCKER") == "true":
+    if env("USE_DOCKER", default="") == "true":
         import socket
 
         hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
