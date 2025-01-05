@@ -12,6 +12,7 @@ MAILGUN_API_URL="https://api.mailgun.net/v3"
 # ------------------------------------------------------------------------------
 POSTGRES_HOST="postgresql"
 POSTGRES_PORT="5432"
+POSTGRES_USER="knowledge_admin"
 POSTGRES_DB="knowledge_admin"
 
 # Redis
