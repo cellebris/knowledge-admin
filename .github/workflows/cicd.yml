@@ -33,7 +33,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       COMPOSE_FILE: compose.local.yaml
-      RUN_TESTS: true
 
     steps:
       - name: Checkout Code Repository
@@ -58,10 +57,10 @@ jobs:
         run: docker compose run --rm ui /setup
 
       - name: Run Django UI Tests
-        run: docker compose run ui pytest --ds=config.settings.local.ui -o 'python_files=test_ui_*.py'
+        run: docker compose run ui pytest -e RUN_TESTS=true --ds=config.settings.local.ui -o 'python_files=test_ui_*.py'
 
       - name: Run Django API Tests
-        run: docker compose run api pytest --ds=config.settings.local.api -o 'python_files=test_api_*.py'
+        run: docker compose run api pytest -e RUN_TESTS=true --ds=config.settings.local.api -o 'python_files=test_api_*.py'
 
       - name: Tear down the Stack
         run: docker compose down
