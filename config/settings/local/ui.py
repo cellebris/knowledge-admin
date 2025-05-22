@@ -43,9 +43,3 @@ if env("RUN_TESTS", default="") == "":
 # ------------------------------------------------------------------------------
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#middleware
 MIDDLEWARE += ["app.global.middleware.user_timezone.TimezoneMiddleware"]
-
-# SECURITY
-# ------------------------------------------------------------------------------
-# django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = True

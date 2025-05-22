@@ -15,12 +15,3 @@ MIDDLEWARE += ["app.global.middleware.user_timezone.TimezoneMiddleware"]  # noqa
 # ------------------------------------------------------------------------------
 # Django Admin path regex.
 ADMIN_PATH = env("DJANGO_ADMIN_PATH")
-
-# SECURITY
-# ------------------------------------------------------------------------------
-# django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    "https://km.cellebris.com",
-    "https://api.km.cellebris.com",
-]
