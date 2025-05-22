@@ -1,4 +1,4 @@
-{% load static i18n %}
+{% load static i18n site_urls %}
 
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
@@ -56,11 +56,6 @@
     </main>
     {% block modal %}
     {% endblock modal %}
-    <div id="outer-help">
-      {% if request.user.is_authenticated %}
-        {% include 'components/help_bubble.html' %}
-      {% endif %}
-    </div>
     {% include 'components/footer.html' %}
     {% block inline_javascript %}
     {% endblock inline_javascript %}

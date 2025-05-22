@@ -1,4 +1,4 @@
-{% load static i18n %}
+{% load static i18n site_urls %}
 
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
@@ -50,9 +50,6 @@
       <input type="hidden" id="user-settings-save-url" value="{% url 'users:save_settings' %}" />
     </div>
     {% block help %}
-      {% if request.user.is_authenticated %}
-        {% include 'components/help_bubble.html' %}
-      {% endif %}
     {% endblock help %}
     {% block inline_javascript %}
     {% endblock inline_javascript %}
