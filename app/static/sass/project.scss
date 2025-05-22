@@ -1179,7 +1179,7 @@ header select {
 //////////
 
 main {
-  background-color: #f0f0f0 !important;
+  // background-color: #f0f0f0 !important;
 }
 
 body {
@@ -1195,7 +1195,7 @@ p {
 }
 
 #page-container {
-  background-color: $offwhite;
+  background-color: $white;
   margin: 0;
   padding: 0;
 }
@@ -1300,7 +1300,7 @@ body.anonymous #page-content-wrapper {
   overflow: auto;
   min-height: 100%;
   width: 100%;
-  background-color: $offwhite;
+  // background-color: $offwhite;
 }
 
 body.anonymous #main-content {
