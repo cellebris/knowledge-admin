@@ -4,6 +4,11 @@ from django.conf import settings
 register = template.Library()
 
 
+@register.simple_tag(name="root_domain")
+def root_domain():
+    return settings.DOMAIN_NAME
+
+
 @register.simple_tag(name="ui_url")
 def ui_url(*args):
     path = "/".join([str(arg) for arg in args]) if len(args) else ""
