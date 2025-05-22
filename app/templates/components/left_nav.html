@@ -17,14 +17,10 @@
               <i class="bx bx-shape-polygon"></i>
               <span class="nav_name">{% translate 'Teams' %}</span>
             </a>
-            <a id="lnk-pages" href="{% ui_url 'pages' %}" class="nav_link text-decoration-none">
-              <i class="bx bx-list-check"></i>
-              <span class="nav_name">{% translate 'Pages' %}</span>
-            </a>
-            <a id="lnk-media" href="{% ui_url 'media' %}" class="nav_link text-decoration-none">
+            {% comment %} <a id="lnk-media" href="{% ui_url 'media' %}" class="nav_link text-decoration-none">
               <i class="bx bx-images"></i>
               <span class="nav_name">{% translate 'Media' %}</span>
-            </a>
+            </a> {% endcomment %}
             <a id="lnk-documents" href="{% ui_url 'documents' %}" class="nav_link text-decoration-none">
               <i class="bx bx-library"></i>
               <span class="nav_name">{% translate 'Documents' %}</span>
@@ -36,10 +32,6 @@
             <a id="lnk-research" href="{% ui_url 'research' %}" class="nav_link text-decoration-none">
               <i class="bx bx-file-find xbx-rotate-90"></i>
               <span class="nav_name">{% translate 'Research' %}</span>
-            </a>
-            <a id="lnk-api-docs" href="{% ui_url 'api/docs' %}" class="nav_link text-decoration-none">
-              <i class="bx bx-cloud-download"></i>
-              <span class="nav_name">{% translate 'API' %}</span>
             </a>
           {% endif %}
         </div>
