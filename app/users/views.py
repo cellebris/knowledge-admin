@@ -21,7 +21,7 @@ class SignupFormView(PublicOnlyAccessMixin, ParamFormView):
         return super().form_valid(form)
 
     def get_success_url(self, **kwargs):
-        return reverse("landing:start")
+        return reverse("landing:home")
 
 
 class DetailView(LoginRequiredMixin, DetailView):
