@@ -10,8 +10,7 @@ from . import models
 # Update Handler
 #
 def create_form_event(self, instance):
-    if not instance.page:
-        instance.create_event()
+    instance.create_event()
 
 
 def create_embedding_event(self, instance):
@@ -63,35 +62,32 @@ views.generate(
     permission_classes=[permissions.EnginePermissions],
     filter_fields={
         "id": "id",
-        "session_id": "id",
+        "email": "id",
         "path": "short_text",
         "name": "short_text",
-        "nav_path": "short_text",
+        "type": "short_text",
         "created": "date_time",
         "updated": "date_time",
     },
-    ordering_fields=["created", "name", "session_id", "path", "nav_path"],
-    search_fields=["name", "session_id", "path", "nav_path"],
+    ordering_fields=["created", "name", "type", "email", "path"],
+    search_fields=["name", "type", "email", "path"],
     view_fields=[
         "id",
-        "session_id",
+        "email",
         "path",
         "name",
+        "type",
         "fields",
-        "nav_path",
-        "page",
         "created",
         "updated",
     ],
     create_fields=[
-        "session_id",
+        "email",
         "path",
-        "nav_path",
         "name",
+        "type",
         "fields",
     ],
-    update_fields=[
-        "page",
-    ],
+    update_fields=[],
     handler=create_form_event,
 )

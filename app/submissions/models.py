@@ -26,13 +26,11 @@ class TextEmbedding(BaseUUIDModel):
 
 
 class FormSubmission(BaseUUIDModel):
-    session_id = models.CharField(_("Session ID"), blank=False, max_length=50)
+    email = models.CharField(_("User Email"), blank=False, max_length=512)
     path = models.CharField(_("Path"), blank=False, max_length=1024)
     name = models.CharField(_("Name"), blank=False, max_length=255)
+    type = models.CharField(_("Type"), blank=False, max_length=50)
     fields = model_fields.DictionaryField(_("Fields"))
-
-    nav_path = models.CharField(_("Navigation Path"), blank=True, null=True, max_length=1024)
-    page = model_fields.DictionaryField(_("Page Definition"))
 
     def __str__(self):
         return self.name
@@ -43,12 +41,11 @@ class FormSubmission(BaseUUIDModel):
             data={
                 "operation": operation,
                 "id": str(self.id),
-                "session_id": self.session_id,
+                "email": self.email,
                 "path": self.path,
                 "name": self.name,
+                "type": self.type,
                 "fields": self.fields,
-                "nav_path": self.nav_path,
-                "page": self.page,
             },
         )
         if operation != "delete":
