@@ -37,11 +37,6 @@
             {% endwith %}
           </div>
         {% endif %}
-        {% if request.path != "/landing/start/" %}
-          <div class="col-md-2 p-3">
-            <a href="{% url 'landing:start' %}" class="btn btn-success w-100">Getting Started</a>
-          </div>
-        {% endif %}
       </div>
     </div>
   </header>
