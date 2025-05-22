@@ -21,7 +21,6 @@ urlpatterns = [
     path("contact/", ContactFormView.as_view(), name="contact"),
     path("privacy/", TemplateView.as_view(template_name="pages/privacy.html"), name="privacy"),
     path("tos/", TemplateView.as_view(template_name="pages/tos.html"), name="tos"),
-    path("api/", include("app.api.urls", namespace="api")),
     path("accounts/", include("allauth.urls")),
     path("landing/", include("app.landing.urls", namespace="landing")),
     path("users/", include("app.users.urls", namespace="users")),
