@@ -376,7 +376,7 @@ class InviteConfirmView(ParamFormView):
         return super().form_valid(form)
 
     def get_success_url(self, **kwargs):
-        return reverse("landing:start")
+        return reverse("landing:home")
 
     def dispatch(self, request, *args, **kwargs):
         self.invite = get_object_or_404(models.TeamInvite, pk=self.kwargs["pk"])
