@@ -30,7 +30,7 @@ def get_redis_url(database_num):
 BASE_UI_URL = env.str("BASE_UI_URL", default="")
 BASE_API_URL = env.str("BASE_API_URL", default="")
 
-SESSION_COOKIE_NAME = "publisher_session_id"
+SESSION_COOKIE_NAME = "sessionid"
 
 domain = env.str("DOMAIN_NAME", default="")
 if domain:
@@ -62,12 +62,43 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#locale-paths
 LOCALE_PATHS = [str(BASE_DIR / "locale")]
 
+# https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
+SECRET_KEY = env("DJANGO_SECRET_KEY")
+
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {"default": env.db("DATABASE_URL")}
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# CACHES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#caches
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": get_redis_url(1),
+        "TIMEOUT": 86400,  # 24 hours
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            # Mimicing memcache behavior.
+            # https://github.com/jazzband/django-redis#memcached-exceptions-behavior
+            "IGNORE_EXCEPTIONS": True,
+        },
+    },
+    "select2": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": get_redis_url(2),
+        "TIMEOUT": 604800,  # 7 days
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            # Mimicing memcache behavior.
+            # https://github.com/jazzband/django-redis#memcached-exceptions-behavior
+            "IGNORE_EXCEPTIONS": True,
+        },
+    },
+}
 
 # URLS
 # ------------------------------------------------------------------------------
@@ -258,7 +289,33 @@ SESSION_COOKIE_HTTPONLY = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
 CSRF_COOKIE_HTTPONLY = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
-X_FRAME_OPTIONS = "DENY"
+X_FRAME_OPTIONS = "ALLOWALL"
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#use-x-forwarded-host
+USE_X_FORWARDED_HOST = True
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-proxy-ssl-header
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
+SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=False)
+
+# https://docs.djangoproject.com/en/dev/topics/security/#ssl-https
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-seconds
+# TODO: set this to 60 seconds first and then to 518400 once you prove the former works
+SECURE_HSTS_SECONDS = 60
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-include-subdomains
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-preload
+SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
+# https://docs.djangoproject.com/en/dev/ref/middleware/#x-content-type-options-nosniff
+SECURE_CONTENT_TYPE_NOSNIFF = env.bool("DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", default=True)
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-cross-origin-opener-policy
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "unsafe-none"
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-referrer-policy
+SECURE_REFERRER_POLICY = "no-referrer"
+
+# django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # EMAIL
 # ------------------------------------------------------------------------------
@@ -309,7 +366,7 @@ DJANGO_ADMIN_FORCE_ALLAUTH = env.bool("DJANGO_ADMIN_FORCE_ALLAUTH", default=Fals
 # FORMS
 # ------------------------------------------------------------------------------
 # Tell select2 which cache configuration to use:
-SELECT2_CACHE_BACKEND = "default"
+SELECT2_CACHE_BACKEND = "select2"
 
 # LOGGING
 # ------------------------------------------------------------------------------
@@ -399,10 +456,7 @@ REST_FRAMEWORK = {
         "engine": env.str("API_ENGINE_USER_THROTTLE_RATE", default="100/sec"),
         "team_member": env.str("API_TEAM_USER_THROTTLE_RATE", default="100/sec"),
     },
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
-    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework.authentication.TokenAuthentication",),
     "DEFAULT_SCHEMA_CLASS": "app.api.schema.AutoSchema",
     "DEFAULT_METADATA_CLASS": "app.api.metadata.Metadata",
     "DEFAULT_FILTER_BACKENDS": [
@@ -418,17 +472,17 @@ REST_FRAMEWORK = {
 # See more configuration options at https://drf-spectacular.readthedocs.io/en/latest/settings.html#settings
 SPECTACULAR_SETTINGS = {
     "TITLE": "Cellebris Publisher",
-    "DESCRIPTION": """
+    "DESCRIPTION": f"""
 Documentation for the OpenAPI compatible REST endpoints of the Cellebris Publisher API.
-<small>You can manage your API token <a href="/users/token/embed">here</a>.</small>
+<small>You can manage your API token <a href="{BASE_UI_URL}/users/token/embed">here</a>.</small>
 """,
     "VERSION": "1.0.0",
-    "SERVE_PERMISSIONS": ("rest_framework.permissions.IsAuthenticated",),
-    "SERVE_PUBLIC": False,
+    "SERVE_PUBLIC": True,
     "SWAGGER_UI_SETTINGS": {
         "deepLinking": True,
         "filter": True,
         "docExpansion": "none",
         "defaultModelsExpandDepth": -1,
     },
+    "SERVERS": {"url": BASE_API_URL, "description": "Knowledge Manager API"},
 }
